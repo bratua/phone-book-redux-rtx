@@ -10,7 +10,40 @@ export const phoneBookApi = createApi({
       query: () => `/contacts`,
       providesTags: ['Contacts'],
     }),
+    getContactById: builder.query({
+      query: id => `/contacts/${id}`,
+      providesTags: ['Contacts'],
+    }),
+    deleteContact: builder.mutation({
+      query: id => ({
+        url: `/contacts/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Contacts'],
+    }),
+    addContact: builder.mutation({
+      query: newContact => ({
+        url: `/contacts`,
+        method: 'POST',
+        body: newContact,
+      }),
+      invalidatesTags: ['Contacts'],
+    }),
+    updateContact: builder.mutation({
+      query: contact => ({
+        url: `/contacts/${contact.id}`,
+        method: 'PUT',
+        body: contact,
+      }),
+      invalidatesTags: ['Contacts'],
+    }),
   }),
 });
 
-export const { useGetAllContactsQuery } = phoneBookApi;
+export const {
+  useGetAllContactsQuery,
+  useGetContactByIdQuery,
+  useDeleteContactMutation,
+  useAddContactMutation,
+  useUpdateContactMutation,
+} = phoneBookApi;

@@ -13,7 +13,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <Provider store={store}>
-        <BrowserRouter>
+        <BrowserRouter basename="/phone-book-redux-rtx">
           <App />
         </BrowserRouter>
       </Provider>
