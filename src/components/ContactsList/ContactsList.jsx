@@ -1,8 +1,11 @@
 import { useGetAllContactsQuery } from 'redux/contactSlice';
+import { useSelector } from 'react-redux';
 import { ContactCard } from 'components/ContactCard';
 import { useModal } from 'components/Modal/hooks';
 import { ModalWindow } from 'components/Modal/';
 import { Editor } from 'components/Editor';
+import { Filter } from 'components/Filter';
+import { ContactListStyled } from 'components/ContactCard';
 
 export const ContactsList = () => {
   const {
@@ -11,6 +14,20 @@ export const ContactsList = () => {
     isSuccess,
     isFetching,
   } = useGetAllContactsQuery();
+  const filterData = useSelector(
+    state => state.filter.filterData
+  ).toLowerCase();
+
+  const filtredContacts = () => {
+    if (contacts) {
+      console.log(contacts);
+      return contacts.filter(contact =>
+        contact.name.toLowerCase().includes(filterData)
+      );
+    }
+  };
+
+  console.log('filtredContacts', filtredContacts());
 
   const { isOpen, open, close } = useModal();
 
@@ -27,12 +44,14 @@ export const ContactsList = () => {
       )}
 
       {isFetching && 'Loading...'}
-      <ol>
+      {isSuccess && contacts.length > 0 && <Filter />}
+
+      <ContactListStyled>
         {isSuccess &&
-          contacts.map(contact => (
+          filtredContacts().map(contact => (
             <ContactCard key={contact.id} contact={contact} />
           ))}
-      </ol>
+      </ContactListStyled>
     </>
   );
 };

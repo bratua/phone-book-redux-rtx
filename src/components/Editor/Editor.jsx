@@ -7,6 +7,7 @@ import {
   useAddContactMutation,
   useUpdateContactMutation,
 } from 'redux/contactSlice';
+import { FiSave } from 'react-icons/fi';
 // import { useModal } from 'components/Modal/hooks';
 
 const editorInitialValues = {
@@ -145,7 +146,7 @@ export const Editor = ({ contact, onClose }) => {
           <p>{errors.contactPhone && 'Input correct phone number'}</p>
         </label>
 
-        <button type="submit">{formTitle}</button>
+        <button type="submit">{<FiSave size="32" />}</button>
       </form>
     </>
   );

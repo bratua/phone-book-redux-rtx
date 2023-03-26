@@ -6,6 +6,8 @@ import {
 import { useModal } from 'components/Modal/hooks';
 import { ModalWindow } from 'components/Modal/';
 import { Editor } from 'components/Editor';
+import { ContactCardStyled } from 'components/ContactCard';
+import { FiEdit2, FiTrash2, FiSave } from 'react-icons/fi';
 
 export const ContactCard = ({ contact: { id, name, phoneNumber } }) => {
   const [deleteContact, { isLoading }] = useDeleteContactMutation();
@@ -13,11 +15,13 @@ export const ContactCard = ({ contact: { id, name, phoneNumber } }) => {
   const { isOpen, open, close } = useModal();
 
   return (
-    <li>
-      <h2>Name: {name}</h2>
-      <p>Phone: {phoneNumber}</p>
+    <ContactCardStyled>
+      <div>
+        <p>Name: {name}</p>
+        <p>Phone: {phoneNumber}</p>
+      </div>
       <button type="button" onClick={() => open()} disabled={isLoading}>
-        Edit
+        {<FiEdit2 size="20" />}
       </button>
 
       <button
@@ -27,7 +31,7 @@ export const ContactCard = ({ contact: { id, name, phoneNumber } }) => {
         }}
         disabled={isLoading}
       >
-        Delete
+        {<FiTrash2 size="20" />}
       </button>
 
       {isOpen && (
@@ -35,6 +39,6 @@ export const ContactCard = ({ contact: { id, name, phoneNumber } }) => {
           <Editor onClose={close} contact={contact} />
         </ModalWindow>
       )}
-    </li>
+    </ContactCardStyled>
   );
 };
